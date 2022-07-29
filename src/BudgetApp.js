@@ -2,9 +2,8 @@ import Container from 'react-bootstrap/Container';
 import Stack from 'react-bootstrap/Stack';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import ProgressBar from 'react-bootstrap/ProgressBar';
 import AddExpenseModal from './addExpenseModal';
-import ViewExpenseModal from './viewExpenses';
+
 import AddBudgetModal from './addBudgetModal';
 import Budget from './Budgets';
 import React from 'react';
@@ -14,7 +13,7 @@ import { useBudget } from './BudgetContext';
 export default function BudgetApp(props) {
 
 const [budgetMshow, setBudgetMShow] = useState(false);
-const{budgets} = useBudget()
+const{budgets,expenses} = useBudget()
 const[expenseMShow,setExpenseMShow] = useState(false)
 const[addExpenseModalBudgetId,setExpenseModalBudgetId]=useState()
 
@@ -25,6 +24,9 @@ function openExpenseModal(budgetId){
 }
 
 const {getBudgetExpenses}=useBudget()
+
+const totalAmount=expenses.reduce((total,expense)=>total+expense.amount,0)
+
 
 
   
@@ -69,8 +71,15 @@ const {getBudgetExpenses}=useBudget()
                 <Card bg='dark' text='white' className='
                       mx-1' >
                     <Card.Body >
-                        <Card.Title >Total</Card.Title>
-                        <ProgressBar className='my-2' variant='primary' now={30} label={`${30}%`} />
+                    <Card.Title className='d-flex justify-content-between'>
+                          <div>  
+                          Total
+                          </div>
+                          <div>
+                            {totalAmount}
+                          </div>
+                            </Card.Title>
+                        
                     </Card.Body>
                 </Card>
 
